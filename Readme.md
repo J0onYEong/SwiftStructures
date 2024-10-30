@@ -135,7 +135,9 @@ If the count exceeds the number of key-value pairs in the dictionary, it will be
 
 ### LockedDictionary
 
-LockedDictionary is a custom thread-safe wrapper around Swift’s native Dictionary. It ensures safe, concurrent access to its elements by using a lock (NSLock). This class is particularly useful in multithreaded environments where concurrent reads and writes to a dictionary could lead to data races or inconsistencies.
+LockedDictionary is a custom thread-safe wrapper around Swift’s native Dictionary. It ensures safe, concurrent access to its elements by using a concurrent dispatch queue. This class is particularly useful in multithreaded environments where concurrent reads and writes to a dictionary could lead to data races or inconsistencies.
+
+By utilizing a concurrent dispatch queue, LockedDictionary allows multiple read operations to be performed simultaneously, maximizing read performance in read-heavy scenarios. For write operations, it uses a barrier to ensure exclusive access, preventing data races and maintaining data consistency during modifications. This approach provides a balance between thread safety and performance, making LockedDictionary efficient for use in environments where concurrent dictionary access is required.
     
 #### Example
 
