@@ -13,33 +13,28 @@ public class LockedDictionary<Key, Value> where Key: Hashable {
     
     private var source: Source = [:]
     
-    private let lock: NSLock = .init()
+    private let queue = DispatchQueue(
+        label: "com.lockeddictionary.concurrentQueue",
+        attributes: .concurrent
+    )
     
     public init() { }
     
     public subscript(key: Key) -> Value? {
         get {
-            defer {
-                lock.unlock()
-            }
-            lock.lock()
-            return source[key]
+            queue.sync { source[key] }
         }
         set(newValue) {
-            defer {
-                lock.unlock()
+            queue.async(flags: .barrier) { [weak self] in
+                self?.source[key] = newValue
             }
-            lock.lock()
-            source[key] = newValue
         }
     }
     
     public func remove(key: Key) {
-        defer {
-            lock.unlock()
+        queue.async(flags: .barrier) { [weak self] in
+            self?.source.removeValue(forKey: key)
         }
-        lock.lock()
-        source.removeValue(forKey: key)
     }
 }
 
