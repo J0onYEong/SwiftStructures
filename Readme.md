@@ -5,7 +5,8 @@
 - [x] Red-black tree
 - [x] HashMap(powerd by RBTree)
 - [ ] Thread-safe dictionary
-    - [x] NSLock
+    - [x] ~~NSLock~~
+    - [x] ConcurrentQueue(with barrier)
     - [ ] Actor
 
 
