@@ -20,6 +20,14 @@ public class LockedDictionary<Key, Value> where Key: Hashable {
     
     public init() { }
     
+    public var values: [Value] {
+        queue.sync { source.values.map({ $0 }) }
+    }
+    
+    public var keys: [Key] {
+        queue.sync { source.keys.map({ $0 }) }
+    }
+    
     public subscript(key: Key) -> Value? {
         get {
             queue.sync { source[key] }

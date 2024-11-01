@@ -9,6 +9,17 @@ import XCTest
 @testable import SwiftStructures
 
 final class ThreadSafeDictionary: XCTestCase {
+    
+    func keysValuesTest() {
+        let dictionary = LockedDictionary<Int, String>()
+        
+        for index in 0..<100 {
+            dictionary[index] = ""
+        }
+        
+        XCTAssertTrue(dictionary.keys.count == 100)
+        XCTAssertTrue(dictionary.values.count == 100)
+    }
 
     func testThreadSaftyForLockedDictionary() {
         let dictionary = LockedDictionary<Int, String>()
