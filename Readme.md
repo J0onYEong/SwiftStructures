@@ -3,7 +3,7 @@
 # Milestone
 
 - [x] Red-black tree
-- [x] HashMap(powerd by RBTree)
+- [x] HashMap(powered by RBTree)
 - [ ] Thread-safe dictionary
     - [x] ~~NSLock~~
     - [x] ConcurrentQueue(with barrier)
